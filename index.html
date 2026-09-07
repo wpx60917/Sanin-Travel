@@ -7,28 +7,28 @@
     
     <style>
         :root {
-            /* 顏色主題：大地與神話 (自訂配色) */
-            --c-text: #040316;        /* 極深文字色 */
-            --c-background: #fbfbfe;  /* 乾淨底色 */
-            --c-primary: #844b06;     /* 大地木棕 */
-            --c-secondary: #e5c8b8;   /* 柔和膚粉 */
-            --c-accent: #674e79;      /* 神話暮紫 */
+            /* 顏色主題：自然與禪意 (木棕與深綠) */
+            --c-text: #191c19;        /* 極深墨綠黑 */
+            --c-background: #f9fbf9;  /* 帶點自然綠意的乾淨底色 */
+            --c-primary: #844b06;     /* 大地木棕 (維持您的選擇) */
+            --c-secondary: #dce5d9;   /* 柔和鼠尾草淺綠 */
+            --c-accent: #2c5e3b;      /* 森林深松綠 */
             
             --c-paper: #ffffff;       /* 卡片底色 */
             
             --text-main: var(--c-text);
-            --text-muted: #5e5a66;    /* 配合新色調的次要字體色 */
+            --text-muted: #525a54;    /* 配合綠色調的次要字體色 */
             
-            --border-light: #e8e6ed;
+            --border-light: #e3e8e4;
             
             /* 按鈕設定 */
             --btn-primary: var(--c-primary);
             --btn-primary-hover: #633804;
             --btn-alt: var(--c-secondary);
-            --btn-alt-text: #4a2902;
-            --btn-alt-hover: #d6b4a2;
+            --btn-alt-text: #1d3b25;
+            --btn-alt-hover: #c4d1bf;
             --btn-park: var(--c-accent);
-            --btn-park-hover: #4e3a5c;
+            --btn-park-hover: #1f4229;
             --btn-park-text: #ffffff;
             
             /* UI 設定 */
@@ -55,7 +55,7 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, rgba(132, 75, 6, 0.85) 0%, rgba(103, 78, 121, 0.9) 100%),
+            background: linear-gradient(135deg, rgba(132, 75, 6, 0.85) 0%, rgba(44, 94, 59, 0.9) 100%),
                         url('https://images.unsplash.com/photo-1505245208761-ba3ce0e15679?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
             color: white;
             padding: 3.5rem 1.25rem 2.5rem;
@@ -70,7 +70,7 @@
             position: absolute;
             top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: radial-gradient(circle at 50% 100%, rgba(229, 200, 184, 0.25) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 100%, rgba(220, 229, 217, 0.25) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -263,7 +263,7 @@
         .highlight {
             color: var(--c-primary);
             font-weight: 600;
-            background: linear-gradient(to top, rgba(229, 200, 184, 0.45) 40%, transparent 40%);
+            background: linear-gradient(to top, rgba(220, 229, 217, 0.7) 40%, transparent 40%);
         }
 
         .btn-group {
