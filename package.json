@@ -1,0 +1,15 @@
+{
+"name": "tottori-shimane-trip",
+"version": "1.0.0",
+"description": "鳥取與島根五日自駕行行程導航網頁",
+"scripts": {
+"start": "echo 'Static site ready'"
+},
+"keywords": [
+"tottori",
+"shimane",
+"travel"
+],
+"author": "",
+"license": "MIT"
+}
