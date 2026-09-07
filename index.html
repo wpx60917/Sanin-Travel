@@ -32,16 +32,64 @@
         header {
             background: var(--primary-color);
             color: white;
-            padding: 1.25rem 1rem;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
+        
+        .header-top {
+            padding: 1.25rem 1rem 0.5rem;
+        }
 
         header h1 { margin: 0; font-size: 1.25rem; }
         header p { margin: 0.25rem 0 0 0; font-size: 0.9rem; opacity: 0.9; }
+
+        /* --- 分頁 (Tab) 樣式 --- */
+        .tab-nav {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.15);
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        .tab-nav::-webkit-scrollbar { 
+            display: none; /* Chrome, Safari */
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 76px;
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 0.8rem 0.25rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            color: white;
+            border-bottom-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .container {
             padding: 1rem;
@@ -175,14 +223,23 @@
 <body>
 
 <header>
-    <h1>鳥取與島根 五日自駕行</h1>
-    <p>2026/09/14 - 2026/09/18 ｜ 米子進出</p>
+    <div class="header-top">
+        <h1>鳥取與島根 五日自駕行</h1>
+        <p>2026/09/14 - 2026/09/18 ｜ 米子進出</p>
+    </div>
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'day1')">Day 1</button>
+        <button class="tab-btn" onclick="openTab(event, 'day2')">Day 2</button>
+        <button class="tab-btn" onclick="openTab(event, 'day3')">Day 3</button>
+        <button class="tab-btn" onclick="openTab(event, 'day4')">Day 4</button>
+        <button class="tab-btn" onclick="openTab(event, 'day5')">Day 5</button>
+    </div>
 </header>
 
 <div class="container">
 
     <!-- Day 1 -->
-    <div class="day-card">
+    <div id="day1" class="day-card tab-content active">
         <h2 class="day-title">Day 1：抵達與柯南小鎮 <span>09/14 (一)</span></h2>
         <div class="timeline">
             <div class="timeline-item">
@@ -237,7 +294,7 @@
     </div>
 
     <!-- Day 2 -->
-    <div class="day-card">
+    <div id="day2" class="day-card tab-content">
         <h2 class="day-title">Day 2：海岸奇景與夕陽 <span>09/15 (二)</span></h2>
         <div class="timeline">
             <div class="timeline-item drive"><div class="time-badge">09:00 - 09:15 ｜ 🚗 開車出發前往鳥取砂丘</div></div>
@@ -301,7 +358,7 @@
     </div>
 
     <!-- Day 3 -->
-    <div class="day-card">
+    <div id="day3" class="day-card tab-content">
         <h2 class="day-title">Day 3：國寶城池與出雲微醺 <span>09/16 (三)</span></h2>
         <div class="timeline">
             <div class="timeline-item walk"><div class="time-badge">09:00 - 10:20 ｜ 🚶 晨間散策 (溫泉街步行)</div></div>
@@ -366,7 +423,7 @@
     </div>
 
     <!-- Day 4 -->
-    <div class="day-card">
+    <div id="day4" class="day-card tab-content">
         <h2 class="day-title">Day 4：神話巡禮與溫泉海景 <span>09/17 (四)</span></h2>
         <div class="timeline">
             <div class="timeline-item drive"><div class="time-badge">10:00 - 10:20 ｜ 🚗 開車前往稻佐之濱</div></div>
@@ -445,7 +502,7 @@
     </div>
 
     <!-- Day 5 -->
-    <div class="day-card">
+    <div id="day5" class="day-card tab-content">
         <h2 class="day-title">Day 5：大山牧場與妖怪小鎮 <span>09/18 (五)</span></h2>
         <div class="timeline">
             <div class="timeline-item drive"><div class="time-badge">10:00 - 10:25 ｜ 🚗 從皆生溫泉開車前往大山</div></div>
@@ -494,6 +551,29 @@
     </div>
 
 </div>
+
+<script>
+    function openTab(evt, dayId) {
+        // 隱藏所有分頁內容
+        var tabContents = document.getElementsByClassName("tab-content");
+        for (var i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove("active");
+        }
+        
+        // 移除所有按鈕的 active 狀態
+        var tabBtns = document.getElementsByClassName("tab-btn");
+        for (var i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].classList.remove("active");
+        }
+        
+        // 顯示被點擊的分頁並加上 active 狀態
+        document.getElementById(dayId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        
+        // 切換分頁時，自動將畫面平滑捲動回最上方
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
 
 </body>
 </html>
