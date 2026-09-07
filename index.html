@@ -7,33 +7,36 @@
     
     <style>
         :root {
-            /* 顏色主題：山陰之美 */
-            --c-ocean: #2B4C6F;       /* 日本海深藍 */
-            --c-sunset: #E07A5F;      /* 宍道湖夕陽橘 */
-            --c-sand: #F4F1DE;        /* 鳥取砂丘暖沙白 */
-            --c-stone: #8198A6;       /* 松江城石牆灰 */
-            --c-paper: #FCFAF8;       /* 和紙背景白 */
+            /* 顏色主題：大地與神話 (自訂配色) */
+            --c-text: #040316;        /* 極深文字色 */
+            --c-background: #fbfbfe;  /* 乾淨底色 */
+            --c-primary: #844b06;     /* 大地木棕 */
+            --c-secondary: #e5c8b8;   /* 柔和膚粉 */
+            --c-accent: #674e79;      /* 神話暮紫 */
             
-            --text-main: #3D405B;     /* 主標題/內文深灰藍 */
-            --text-muted: #6B7280;    /* 次要資訊灰 */
+            --c-paper: #ffffff;       /* 卡片底色 */
             
-            --border-light: #E5E7EB;
+            --text-main: var(--c-text);
+            --text-muted: #5e5a66;    /* 配合新色調的次要字體色 */
+            
+            --border-light: #e8e6ed;
             
             /* 按鈕設定 */
-            --btn-primary: var(--c-ocean);
-            --btn-primary-hover: #1A3653;
-            --btn-alt: #F3F4F6;
-            --btn-alt-text: #4B5563;
-            --btn-alt-hover: #E5E7EB;
-            --btn-park: #F2CC8F;      /* 溫暖的停車標示色 */
-            --btn-park-hover: #E3B771;
+            --btn-primary: var(--c-primary);
+            --btn-primary-hover: #633804;
+            --btn-alt: var(--c-secondary);
+            --btn-alt-text: #4a2902;
+            --btn-alt-hover: #d6b4a2;
+            --btn-park: var(--c-accent);
+            --btn-park-hover: #4e3a5c;
+            --btn-park-text: #ffffff;
             
             /* UI 設定 */
             --radius-lg: 16px;
             --radius-md: 10px;
             --radius-sm: 8px;
-            --shadow-soft: 0 8px 24px rgba(43, 76, 111, 0.08);
-            --shadow-header: 0 4px 16px rgba(0, 0, 0, 0.06);
+            --shadow-soft: 0 8px 24px rgba(4, 3, 22, 0.05);
+            --shadow-header: 0 4px 16px rgba(0, 0, 0, 0.04);
         }
         
         * {
@@ -44,7 +47,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro TC", "PingFang TC", "Helvetica Neue", "Microsoft JhengHei", sans-serif;
             line-height: 1.6;
-            background-color: var(--c-sand);
+            background-color: var(--c-background);
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -52,9 +55,10 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--c-ocean) 0%, #1A3653 100%);
+            background: linear-gradient(135deg, rgba(132, 75, 6, 0.85) 0%, rgba(103, 78, 121, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1505245208761-ba3ce0e15679?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
             color: white;
-            padding: 2.5rem 1.25rem 2rem;
+            padding: 3.5rem 1.25rem 2.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -66,7 +70,7 @@
             position: absolute;
             top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: radial-gradient(circle at 50% 100%, rgba(224, 122, 95, 0.15) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 100%, rgba(229, 200, 184, 0.25) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -90,7 +94,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(252, 250, 248, 0.85);
+            background: rgba(251, 251, 254, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -126,8 +130,8 @@
         
         .tab-btn.active {
             color: white;
-            background: var(--c-sunset);
-            box-shadow: 0 4px 10px rgba(224, 122, 95, 0.3);
+            background: var(--c-primary);
+            box-shadow: 0 4px 10px rgba(132, 75, 6, 0.3);
         }
 
         .container {
@@ -158,8 +162,8 @@
         }
 
         .day-title {
-            color: var(--c-ocean);
-            border-bottom: 2px solid #F0F0F0;
+            color: var(--c-primary);
+            border-bottom: 2px solid var(--border-light);
             padding-bottom: 1rem;
             margin-top: 0;
             margin-bottom: 1.5rem;
@@ -172,11 +176,21 @@
         
         .day-title span {
             font-size: 0.9rem;
-            color: var(--c-sunset);
+            color: var(--c-accent);
             font-weight: 600;
-            background: rgba(224, 122, 95, 0.1);
+            background: rgba(103, 78, 121, 0.1);
             padding: 0.3rem 0.75rem;
             border-radius: 20px;
+        }
+
+        .day-banner {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background-color: var(--border-light);
         }
 
         .timeline {
@@ -202,13 +216,13 @@
             height: 14px;
             border-radius: 50%;
             background: var(--c-paper);
-            border: 3px solid var(--c-sunset);
+            border: 3px solid var(--c-accent);
             box-shadow: 0 0 0 4px var(--c-paper);
         }
 
         /* Variations for movement */
         .timeline-item.drive::before, .timeline-item.walk::before {
-            border-color: var(--c-stone);
+            border-color: #a69dae;
             width: 10px;
             height: 10px;
             left: -1.72rem;
@@ -216,12 +230,12 @@
         }
         
         .timeline-item.walk::before { 
-            background: var(--c-stone);
+            background: #a69dae;
         }
 
         .time-badge {
             display: inline-block;
-            color: var(--c-ocean);
+            color: var(--c-primary);
             font-size: 0.85rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
@@ -229,7 +243,7 @@
         }
 
         .timeline-item.drive .time-badge, .timeline-item.walk .time-badge {
-            color: var(--c-stone);
+            color: var(--text-muted);
             font-weight: 500;
         }
 
@@ -247,9 +261,9 @@
         }
 
         .highlight {
-            color: var(--c-sunset);
+            color: var(--c-primary);
             font-weight: 600;
-            background: linear-gradient(to top, rgba(224, 122, 95, 0.15) 40%, transparent 40%);
+            background: linear-gradient(to top, rgba(229, 200, 184, 0.45) 40%, transparent 40%);
         }
 
         .btn-group {
@@ -291,7 +305,7 @@
         
         .map-btn.park-btn { 
             background: var(--btn-park); 
-            color: #7A5722;
+            color: var(--btn-park-text);
         }
         .map-btn.park-btn:hover, .map-btn.park-btn:active { 
             background: var(--btn-park-hover); 
@@ -328,6 +342,7 @@
     <div id="day1" class="tab-content active">
         <div class="day-card">
             <h2 class="day-title">✈️ 抵達與柯南小鎮 <span>09/14 (一)</span></h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Conan_Station_20140810.jpg/800px-Conan_Station_20140810.jpg" alt="柯南車站" class="day-banner" loading="lazy">
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="time-badge">12:00 - 13:30</div>
@@ -385,6 +400,7 @@
     <div id="day2" class="tab-content">
         <div class="day-card">
             <h2 class="day-title">🐫 海岸奇景與夕陽 <span>09/15 (二)</span></h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Tottori_Sand_Dunes_2012.jpg/800px-Tottori_Sand_Dunes_2012.jpg" alt="鳥取砂丘" class="day-banner" loading="lazy">
             <div class="timeline">
                 <div class="timeline-item drive"><div class="time-badge">09:00 - 09:15 ｜ 🚗 開車出發前往鳥取砂丘</div></div>
                 <div class="timeline-item">
@@ -451,6 +467,7 @@
     <div id="day3" class="tab-content">
         <div class="day-card">
             <h2 class="day-title">🏯 國寶城池與出雲微醺 <span>09/16 (三)</span></h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Matsue_Castle_2014.jpg/800px-Matsue_Castle_2014.jpg" alt="松江城" class="day-banner" loading="lazy">
             <div class="timeline">
                 <div class="timeline-item walk"><div class="time-badge">09:00 - 10:20 ｜ 🚶 晨間散策 (溫泉街步行)</div></div>
                 <div class="timeline-item">
@@ -518,6 +535,7 @@
     <div id="day4" class="tab-content">
         <div class="day-card">
             <h2 class="day-title">⛩️ 神話巡禮與溫泉海景 <span>09/17 (四)</span></h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Izumo-taisha_Kaguraden_02.jpg/800px-Izumo-taisha_Kaguraden_02.jpg" alt="出雲大社" class="day-banner" loading="lazy">
             <div class="timeline">
                 <div class="timeline-item drive"><div class="time-badge">10:00 - 10:20 ｜ 🚗 開車前往稻佐之濱</div></div>
                 <div class="timeline-item">
@@ -599,6 +617,7 @@
     <div id="day5" class="tab-content">
         <div class="day-card">
             <h2 class="day-title">🐄 牧場風景與妖怪小鎮 <span>09/18 (五)</span></h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Mount_Daisen_from_Kofu_01.jpg/800px-Mount_Daisen_from_Kofu_01.jpg" alt="大山" class="day-banner" loading="lazy">
             <div class="timeline">
                 <div class="timeline-item drive"><div class="time-badge">10:00 - 10:25 ｜ 🚗 從皆生溫泉開車前往大山</div></div>
                 <div class="timeline-item">
