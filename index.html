@@ -4,197 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>鳥取與島根五日自駕遊 (09/14 - 09/18)</title>
-    
     <style>
         :root {
-            /* 顏色主題：自然與禪意 (木棕與深綠) */
-            --c-text: #191c19;        /* 極深墨綠黑 */
-            --c-background: #f9fbf9;  /* 帶點自然綠意的乾淨底色 */
-            --c-primary: #844b06;     /* 大地木棕 (維持您的選擇) */
-            --c-secondary: #dce5d9;   /* 柔和鼠尾草淺綠 */
-            --c-accent: #2c5e3b;      /* 森林深松綠 */
+            /* 用戶指定的高質感配色 */
+            --text-color: #040316;
+            --bg-color: #fbfbfe;
+            --primary-color: #844b06; /* 大地木棕 */
+            --secondary-color: #e5c8b8; /* 柔和膚粉 */
+            --accent-color: #674e79; /* 神話暮紫 */
             
-            --c-paper: #ffffff;       /* 卡片底色 */
-            
-            --text-main: var(--c-text);
-            --text-muted: #525a54;    /* 配合綠色調的次要字體色 */
-            
-            --border-light: #e3e8e4;
-            
-            /* 按鈕設定 */
-            --btn-primary: var(--c-primary);
-            --btn-primary-hover: #633804;
-            --btn-alt: var(--c-secondary);
-            --btn-alt-text: #1d3b25;
-            --btn-alt-hover: #c4d1bf;
-            --btn-park: var(--c-accent);
-            --btn-park-hover: #1f4229;
-            --btn-park-text: #ffffff;
-            
-            /* UI 設定 */
-            --radius-lg: 16px;
-            --radius-md: 10px;
-            --radius-sm: 8px;
-            --shadow-soft: 0 8px 24px rgba(4, 3, 22, 0.05);
-            --shadow-header: 0 4px 16px rgba(0, 0, 0, 0.04);
+            --btn-alt: #f0f0f5;
+            --btn-alt-text: #674e79;
+            --border-light: #e2e8f0;
+            --card-bg: #ffffff;
         }
         
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro TC", "PingFang TC", "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            background-color: var(--c-background);
-            color: var(--text-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            scroll-behavior: smooth;
+            padding-bottom: 2rem;
         }
 
-        .hero {
-            background: linear-gradient(135deg, rgba(132, 75, 6, 0.85) 0%, rgba(44, 94, 59, 0.9) 100%),
-                        url('https://images.unsplash.com/photo-1505245208761-ba3ce0e15679?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-            color: white;
-            padding: 3.5rem 1.25rem 2.5rem;
-            text-align: center;
+        /* 頂部 Hero 視覺區 */
+        header.hero {
             position: relative;
-            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 2.5rem 1rem 1.5rem 1rem;
+            text-align: center;
         }
 
-        /* 增加一點設計感背景圖案 (利用徑向漸層模擬日出/日落光暈) */
-        .hero::before {
+        header.hero::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at 50% 100%, rgba(220, 229, 217, 0.25) 0%, transparent 50%);
-            pointer-events: none;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(132,75,6,0.85) 0%, rgba(103,78,121,0.85) 100%);
+            z-index: 1;
         }
 
-        .hero h1 { 
-            margin: 0; 
-            font-size: 1.5rem; 
-            font-weight: 700;
-            letter-spacing: 1px;
+        header.hero > * {
             position: relative;
-        }
-        
-        .hero p { 
-            margin: 0.5rem 0 0 0; 
-            font-size: 0.95rem; 
-            opacity: 0.85; 
-            font-weight: 300;
-            position: relative;
+            z-index: 2;
         }
 
-        .sticky-nav {
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+        header p { margin: 0.5rem 0 0 0; font-size: 0.95rem; opacity: 0.9; }
+
+        /* 導覽列 Navbar (Sticky) */
+        nav.tabs {
+            display: flex;
+            overflow-x: auto;
+            background: rgba(251, 251, 254, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(251, 251, 254, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            box-shadow: var(--shadow-header);
-        }
-
-        .tab-nav {
-            display: flex;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            border-bottom: 1px solid var(--border-light);
             padding: 0.5rem;
-            max-width: 800px;
-            margin: auto;
-            gap: 0.25rem;
+            gap: 0.5rem;
+            /* 隱藏捲軸 */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
-        .tab-nav::-webkit-scrollbar { display: none; }
-        
+        nav.tabs::-webkit-scrollbar { display: none; }
+
         .tab-btn {
-            flex: 1 0 auto;
-            min-width: 72px;
+            flex: 0 0 auto;
             background: transparent;
             border: none;
-            color: var(--text-muted);
-            padding: 0.6rem 0.8rem;
+            color: var(--text-color);
             font-size: 0.95rem;
             font-weight: 600;
-            cursor: pointer;
+            padding: 0.6rem 1.2rem;
             border-radius: 20px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-        }
-        
-        .tab-btn.active {
-            color: white;
-            background: var(--c-primary);
-            box-shadow: 0 4px 10px rgba(132, 75, 6, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.6;
         }
 
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(132,75,6,0.3);
+        }
+
+        /* 容器與卡片 */
         .container {
-            padding: 1.5rem 1rem 3rem;
+            padding: 1rem;
             max-width: 800px;
             margin: auto;
         }
 
-        .tab-content {
+        .day-section {
             display: none;
-            animation: fadeIn 0.4s ease forwards;
+            animation: fadeIn 0.4s ease-out forwards;
         }
-        .tab-content.active {
+
+        .day-section.active {
             display: block;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .day-card {
-            background: var(--c-paper);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem 1.25rem;
-            box-shadow: var(--shadow-soft);
-            margin-bottom: 1rem;
-        }
-
-        .day-title {
-            color: var(--c-primary);
-            border-bottom: 2px solid var(--border-light);
-            padding-bottom: 1rem;
-            margin-top: 0;
+            background: var(--card-bg);
+            border-radius: 16px;
             margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .day-title span {
-            font-size: 0.9rem;
-            color: var(--c-accent);
-            font-weight: 600;
-            background: rgba(103, 78, 121, 0.1);
-            padding: 0.3rem 0.75rem;
-            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            overflow: hidden;
         }
 
-        .day-banner {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            background-color: var(--border-light);
+        .day-hero {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
         }
 
+        .day-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        }
+
+        .day-hero-title {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            color: white;
+            z-index: 2;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .day-content {
+            padding: 1.5rem;
+        }
+
+        /* 時間軸設計 */
         .timeline {
-            border-left: 2px solid var(--border-light);
+            border-left: 2px solid var(--secondary-color);
             padding-left: 1.5rem;
             margin-left: 0.5rem;
         }
@@ -206,66 +169,68 @@
 
         .timeline-item:last-child { margin-bottom: 0; }
 
-        /* Timeline Dots */
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -1.86rem; /* Center exactly on the 2px border */
-            top: 0.3rem;
+            left: -1.9rem;
+            top: 0.2rem;
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            background: var(--c-paper);
-            border: 3px solid var(--c-accent);
-            box-shadow: 0 0 0 4px var(--c-paper);
+            background: var(--bg-color);
+            border: 3px solid var(--accent-color);
         }
 
-        /* Variations for movement */
         .timeline-item.drive::before, .timeline-item.walk::before {
-            border-color: #a69dae;
+            border-color: #cbd5e1;
             width: 10px;
             height: 10px;
-            left: -1.72rem;
+            left: -1.75rem;
             top: 0.4rem;
         }
         
-        .timeline-item.walk::before { 
-            background: #a69dae;
-        }
+        .timeline-item.walk::before { border-style: dashed; }
 
         .time-badge {
             display: inline-block;
-            color: var(--c-primary);
+            background: var(--secondary-color);
+            color: var(--primary-color);
             font-size: 0.85rem;
             font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
             margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
         }
 
         .timeline-item.drive .time-badge, .timeline-item.walk .time-badge {
-            color: var(--text-muted);
-            font-weight: 500;
+            background: transparent;
+            color: #64748b;
+            padding: 0;
         }
 
         .loc-name {
             font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 0.35rem;
-            color: var(--text-main);
+            margin-bottom: 0.3rem;
+            color: var(--text-color);
         }
         
         .loc-desc {
             font-size: 0.95rem;
-            color: var(--text-muted);
+            color: #4b5563;
             margin-bottom: 1rem;
         }
 
+        /* 重點畫線效果 */
         .highlight {
-            color: var(--c-primary);
+            background: linear-gradient(120deg, var(--secondary-color) 0%, var(--secondary-color) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 88%;
             font-weight: 600;
-            background: linear-gradient(to top, rgba(220, 229, 217, 0.7) 40%, transparent 40%);
         }
 
+        /* 按鈕設計 */
         .btn-group {
             display: flex;
             flex-direction: column;
@@ -273,49 +238,27 @@
         }
 
         .map-btn {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--btn-primary);
+            display: block;
+            background: var(--accent-color);
             color: white;
             text-decoration: none;
             padding: 0.75rem 1rem;
-            border-radius: var(--radius-md);
+            border-radius: 12px;
             font-size: 0.95rem;
             font-weight: 600;
             text-align: center;
-            transition: all 0.2s ease;
+            transition: transform 0.1s ease, opacity 0.2s ease;
             box-sizing: border-box;
             width: 100%;
-            gap: 6px;
         }
 
-        .map-btn:hover, .map-btn:active { 
-            background: var(--btn-primary-hover); 
-            transform: scale(0.98);
-        }
-        
-        .map-btn.alt-btn { 
-            background: var(--btn-alt); 
-            color: var(--btn-alt-text);
-        }
-        .map-btn.alt-btn:hover, .map-btn.alt-btn:active { 
-            background: var(--btn-alt-hover); 
-        }
-        
-        .map-btn.park-btn { 
-            background: var(--btn-park); 
-            color: var(--btn-park-text);
-        }
-        .map-btn.park-btn:hover, .map-btn.park-btn:active { 
-            background: var(--btn-park-hover); 
-        }
+        .map-btn:active { transform: scale(0.98); }
+        .map-btn.alt-btn { background: var(--btn-alt); color: var(--btn-alt-text); }
+        .map-btn.park-btn { background: var(--primary-color); }
 
         @media (min-width: 600px) {
-            .hero h1 { font-size: 1.8rem; }
-            .hero { padding: 3rem 1.25rem; }
             .btn-group { flex-direction: row; flex-wrap: wrap; }
-            .map-btn { width: auto; flex: 1; }
+            .map-btn { width: auto; flex: 1; min-width: 130px; }
         }
     </style>
 </head>
@@ -326,70 +269,71 @@
     <p>2026/09/14 - 2026/09/18 ｜ 米子進出</p>
 </header>
 
-<nav class="sticky-nav">
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="openTab(event, 'day1')">Day 1</button>
-        <button class="tab-btn" onclick="openTab(event, 'day2')">Day 2</button>
-        <button class="tab-btn" onclick="openTab(event, 'day3')">Day 3</button>
-        <button class="tab-btn" onclick="openTab(event, 'day4')">Day 4</button>
-        <button class="tab-btn" onclick="openTab(event, 'day5')">Day 5</button>
-    </div>
+<nav class="tabs" id="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('day1')">Day 1 柯南</button>
+    <button class="tab-btn" onclick="switchTab('day2')">Day 2 砂丘</button>
+    <button class="tab-btn" onclick="switchTab('day3')">Day 3 出雲</button>
+    <button class="tab-btn" onclick="switchTab('day4')">Day 4 夕陽</button>
+    <button class="tab-btn" onclick="switchTab('day5')">Day 5 妖怪</button>
 </nav>
 
-<main class="container">
+<div class="container">
 
     <!-- Day 1 -->
-    <div id="day1" class="tab-content active">
+    <div id="day1" class="day-section active">
         <div class="day-card">
-            <h2 class="day-title">✈️ 抵達與柯南小鎮 <span>09/14 (一)</span></h2>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Conan_Station_20140810.jpg/800px-Conan_Station_20140810.jpg" alt="柯南車站" class="day-banner" loading="lazy">
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="time-badge">12:00 - 13:30</div>
-                    <div class="loc-name">米子機場 抵達與取車</div>
-                    <div class="loc-desc">IT724 航班抵達，辦理入境與租車手續。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=米子鬼太郎空港" target="_blank" class="map-btn">📍 導航至機場</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">13:30 - 14:00 ｜ 🚗 前往米子市區 (淀江町)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">14:00 - 14:45</div>
-                    <div class="loc-name">午餐：ラーメン 悟空</div>
-                    <div class="loc-desc">推薦超人氣「叉燒牛骨拉麵」(停留 45 分)。<br><small>💡 備案：途中行經的「迴轉壽司北海道米子店」。</small></div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=ラーメン悟空+淀江" target="_blank" class="map-btn">📍 悟空拉麵</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=回転すし北海道+米子" target="_blank" class="map-btn alt-btn">📍 備案：迴轉壽司</a>
+            <div class="day-hero" style="background-image: url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=800&q=80');">
+                <h2 class="day-hero-title">✈️ 抵達與柯南小鎮</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time-badge">12:00 - 13:30</div>
+                        <div class="loc-name">米子機場 抵達與取車</div>
+                        <div class="loc-desc">IT724 航班抵達，辦理入境與租車手續。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=米子鬼太郎空港" target="_blank" class="map-btn">📍 導航至機場</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">14:45 - 15:20 ｜ 🚗 沿國道 9 號前往北榮町</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:20 - 17:15</div>
-                    <div class="loc-name">青山剛昌故鄉館 (柯南小鎮)</div>
-                    <div class="loc-desc">參觀博物館、柯南車站、逛米花商店街 (停留約 2 小時)。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=青山剛昌ふるさと館" target="_blank" class="map-btn">📍 導航柯南博物館</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">17:15 - 18:15 ｜ 🚗 開車前往鳥取市區</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:15 - 18:45</div>
-                    <div class="loc-name">飯店 Check-in (鳥取莫里斯)</div>
-                    <div class="loc-desc">先將行李放入飯店，稍作梳洗。<br><span class="highlight">💡 飯店福利：19:00-22:30 免費拉麵</span></div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=鳥取グリーンホテルモーリス" target="_blank" class="map-btn">📍 導航鳥取莫里斯</a></div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:45 - 20:15</div>
-                    <div class="loc-name">晚餐：鳥取和牛燒肉</div>
-                    <div class="loc-desc">推薦：炭火燒肉 炭藏 或 燒肉 牛王（離飯店走路約三分鐘）。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=炭火焼肉+炭蔵+鳥取" target="_blank" class="map-btn">📍 炭藏</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=焼肉+牛王+鳥取本店" target="_blank" class="map-btn alt-btn">📍 牛王</a>
+                    <div class="timeline-item drive"><div class="time-badge">13:30 - 14:00 ｜ 🚗 前往米子市區</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">14:00 - 14:45</div>
+                        <div class="loc-name">午餐：ラーメン 悟空</div>
+                        <div class="loc-desc">推薦超人氣「叉燒牛骨拉麵」。<br><small>💡 備案：迴轉壽司北海道米子店</small></div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=ラーメン悟空+淀江" target="_blank" class="map-btn">📍 導航：悟空拉麵</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=回転すし北海道+米子" target="_blank" class="map-btn alt-btn">備案：迴轉壽司</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-badge">20:15 - 21:30</div>
-                    <div class="loc-name">市區採買：第一天必需品</div>
-                    <div class="loc-desc">兩間皆營業至深夜，可依需求選擇。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=ドン・キホーテ+鳥取本店" target="_blank" class="map-btn">📍 唐吉訶德</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=イオン+鳥取店" target="_blank" class="map-btn alt-btn">📍 AEON</a>
+                    <div class="timeline-item drive"><div class="time-badge">14:45 - 15:20 ｜ 🚗 前往北榮町</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:20 - 17:15</div>
+                        <div class="loc-name">青山剛昌故鄉館 (柯南小鎮)</div>
+                        <div class="loc-desc">參觀博物館、柯南車站、逛米花商店街。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=青山剛昌ふるさと館" target="_blank" class="map-btn">📍 導航：柯南博物館</a></div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">17:15 - 18:15 ｜ 🚗 前往鳥取市區</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:15 - 18:45</div>
+                        <div class="loc-name">飯店 Check-in (鳥取莫里斯)</div>
+                        <div class="loc-desc"><span class="highlight">19:00-22:30 飯店提供免費拉麵</span></div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=鳥取グリーンホテルモーリス" target="_blank" class="map-btn">📍 導航：鳥取莫里斯</a></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:45 - 20:15</div>
+                        <div class="loc-name">晚餐：鳥取和牛燒肉</div>
+                        <div class="loc-desc">推薦：炭藏 或 牛王（走路約三分鐘）。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=炭火焼肉+炭蔵+鳥取" target="_blank" class="map-btn">📍 導航：炭藏</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=焼肉+牛王+鳥取本店" target="_blank" class="map-btn alt-btn">導航：牛王</a>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">20:15 - 21:30</div>
+                        <div class="loc-name">市區採買</div>
+                        <div class="loc-desc">唐吉訶德或 AEON。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=ドン・キホーテ+鳥取本店" target="_blank" class="map-btn">📍 導航：唐吉訶德</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=イオン+鳥取店" target="_blank" class="map-btn alt-btn">導航：AEON</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -397,216 +341,210 @@
     </div>
 
     <!-- Day 2 -->
-    <div id="day2" class="tab-content">
+    <div id="day2" class="day-section">
         <div class="day-card">
-            <h2 class="day-title">🐫 海岸奇景與夕陽 <span>09/15 (二)</span></h2>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Tottori_Sand_Dunes_2012.jpg/800px-Tottori_Sand_Dunes_2012.jpg" alt="鳥取砂丘" class="day-banner" loading="lazy">
-            <div class="timeline">
-                <div class="timeline-item drive"><div class="time-badge">09:00 - 09:15 ｜ 🚗 開車出發前往鳥取砂丘</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">09:15 - 11:50</div>
-                    <div class="loc-name">鳥取砂丘 ＆ 砂之美術館</div>
-                    <div class="loc-desc">停留 2 小時 35 分，可悠閒攻頂「馬背」、細細品味沙雕展，並品嚐 <span class="highlight">梨子霜淇淋</span>。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=鳥取砂丘" target="_blank" class="map-btn">📍 砂丘停車場</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=砂の美術館" target="_blank" class="map-btn alt-btn">📍 砂之美術館</a>
+            <div class="day-hero" style="background-image: url('https://images.unsplash.com/photo-1627918451152-4fc4948a2727?auto=format&fit=crop&w=800&q=80');">
+                <h2 class="day-hero-title">🐪 海岸奇景與夕陽</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="timeline-item drive"><div class="time-badge">09:00 - 09:15 ｜ 🚗 出發前往鳥取砂丘</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">09:15 - 11:50</div>
+                        <div class="loc-name">鳥取砂丘 ＆ 砂之美術館</div>
+                        <div class="loc-desc">悠閒攻頂「馬背」，並品嚐 <span class="highlight">梨子霜淇淋</span>。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=鳥取砂丘" target="_blank" class="map-btn">📍 砂丘停車場</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=砂の美術館" target="_blank" class="map-btn alt-btn">砂之美術館</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">11:50 - 12:05 ｜ 🚗 開車前往賀露港</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">12:05 - 13:05</div>
-                    <div class="loc-name">午餐：賀露海鮮市場 (かろいち)</div>
-                    <div class="loc-desc">推薦必吃：海鮮丼、「猛者蝦（モサエビ）」與「白魷魚（白イカ）」。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=かろいち" target="_blank" class="map-btn">📍 賀露市場</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">13:05 - 13:35 ｜ 🚗 開車前往白兔海岸</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">13:35 - 14:05</div>
-                    <div class="loc-name">白兔神社</div>
-                    <div class="loc-desc">停留 30 分鐘，參拜求姻緣、買可愛的兔子御守。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=白兎神社" target="_blank" class="map-btn">📍 白兔神社</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">14:05 - 14:50 ｜ 🚗 開車前往倉吉市</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">14:50 - 15:40</div>
-                    <div class="loc-name">二十世紀梨紀念館</div>
-                    <div class="loc-desc">停留 50 分鐘，試吃在地水梨與吃梨子霜淇淋。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=鳥取二十世紀梨記念館+なしっこ館" target="_blank" class="map-btn">📍 梨紀念館</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">15:40 - 16:30 ｜ 🚗 走山陰自動車道前往米子 (約50分)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">16:30 - 17:00</div>
-                    <div class="loc-name">壽城 (お菓子の壽城)</div>
-                    <div class="loc-desc">停留 30 分鐘，休息兼購買鳥取名產「橡實麻糬」與各式伴手禮。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=お菓子の壽城" target="_blank" class="map-btn">📍 壽城</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">17:00 - 17:30 ｜ 🚗 開車前往松江市 (約30分)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">17:30 - 18:00</div>
-                    <div class="loc-name">島根縣立美術館 (湖畔散步)</div>
-                    <div class="loc-desc">停車後於館外草坪尋找「結緣兔子雕像」，並漫步至湖畔。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=島根県立美術館" target="_blank" class="map-btn">📍 縣立美術館</a></div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:00 - 18:20</div>
-                    <div class="loc-name">絕景：宍道湖日落 (Sunset)</div>
-                    <div class="loc-desc"><span class="highlight">捕捉 18:12 左右的宍道湖夕陽絕景</span>。</div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">18:20 - 18:40 ｜ 🚗 開車前往玉造溫泉</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:40 - 19:00</div>
-                    <div class="loc-name">飯店 Check-in (松乃湯)</div>
-                    <div class="loc-desc">辦理入住手續，19:00-20:30 於飯店內享用晚餐。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=玉造温泉+松乃湯" target="_blank" class="map-btn">📍 松乃湯</a></div>
+                    <div class="timeline-item drive"><div class="time-badge">11:50 - 12:05 ｜ 🚗 前往賀露港</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">12:05 - 13:05</div>
+                        <div class="loc-name">午餐：賀露海鮮市場 (かろいち)</div>
+                        <div class="loc-desc">推薦必吃：海鮮丼、猛者蝦與白魷魚。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=かろいち" target="_blank" class="map-btn">📍 導航：賀露市場</a></div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">13:05 - 13:35 ｜ 🚗 前往白兔海岸</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">13:35 - 14:05</div>
+                        <div class="loc-name">白兔神社</div>
+                        <div class="loc-desc">參拜求姻緣、買可愛的兔子御守。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=白兎神社" target="_blank" class="map-btn">📍 導航：白兔神社</a></div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">14:05 - 14:50 ｜ 🚗 前往倉吉市</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">14:50 - 15:40</div>
+                        <div class="loc-name">二十世紀梨紀念館</div>
+                        <div class="loc-desc">試吃在地水梨與吃梨子霜淇淋。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=鳥取二十世紀梨記念館+なしっこ館" target="_blank" class="map-btn">📍 導航：梨紀念館</a></div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">15:40 - 16:30 ｜ 🚗 走山陰道往米子</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">16:30 - 17:00</div>
+                        <div class="loc-name">壽城 (お菓子の壽城)</div>
+                        <div class="loc-desc">休息兼購買鳥取名產「橡實麻糬」。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=お菓子の壽城" target="_blank" class="map-btn">📍 導航：壽城</a></div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">17:00 - 17:30 ｜ 🚗 前往松江市</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">17:30 - 18:00</div>
+                        <div class="loc-name">島根縣立美術館 (湖畔散步)</div>
+                        <div class="loc-desc">館外草坪尋找「結緣兔子雕像」。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=島根県立美術館" target="_blank" class="map-btn">📍 導航：縣立美術館</a></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:00 - 18:20</div>
+                        <div class="loc-name">絕景：宍道湖日落</div>
+                        <div class="loc-desc"><span class="highlight">捕捉 18:12 左右的夕陽絕景</span>。</div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">18:20 - 18:40 ｜ 🚗 前往玉造溫泉</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:40 - 19:00</div>
+                        <div class="loc-name">飯店 Check-in (松乃湯)</div>
+                        <div class="loc-desc">辦理入住，19:00-20:30 享用晚餐。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=玉造温泉+松乃湯" target="_blank" class="map-btn">📍 導航：松乃湯</a></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Day 3 -->
-    <div id="day3" class="tab-content">
+    <div id="day3" class="day-section">
         <div class="day-card">
-            <h2 class="day-title">🏯 國寶城池與出雲微醺 <span>09/16 (三)</span></h2>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Matsue_Castle_2014.jpg/800px-Matsue_Castle_2014.jpg" alt="松江城" class="day-banner" loading="lazy">
-            <div class="timeline">
-                <div class="timeline-item walk"><div class="time-badge">09:00 - 10:20 ｜ 🚶 晨間散策 (溫泉街步行)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">09:00 - 10:20</div>
-                    <div class="loc-name">玉造溫泉 祈願石與美肌巡禮</div>
-                    <div class="loc-desc">漫步至「玉作湯神社」與「清巖寺」，享受清晨溫泉街氛圍。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=玉作湯神社" target="_blank" class="map-btn alt-btn">📍 玉作湯神社</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=清巌寺+玉造" target="_blank" class="map-btn alt-btn">📍 清巖寺</a>
+            <div class="day-hero" style="background-image: url('https://images.unsplash.com/photo-1590559899731-a382839430ad?auto=format&fit=crop&w=800&q=80');">
+                <h2 class="day-hero-title">🏯 國寶城池與微醺</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="timeline-item walk"><div class="time-badge">09:00 - 10:20 ｜ 🚶 晨間散策</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">09:00 - 10:20</div>
+                        <div class="loc-name">玉作湯神社與清巖寺</div>
+                        <div class="loc-desc">漫步溫泉街，進行祈願石與美肌巡禮。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=玉作湯神社" target="_blank" class="map-btn alt-btn">玉作湯神社</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=清巌寺+玉造" target="_blank" class="map-btn alt-btn">清巖寺</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">10:20 - 11:00 ｜ 🚗 從玉造開往松江市區</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">11:00 - 11:50</div>
-                    <div class="loc-name">彩雲堂與甜點採買</div>
-                    <div class="loc-desc">步行採買「若草」與 Truffle DONUT。買完放回車上，準備去吃午餐。<br><small>💡 停車建議：彩雲堂車位、京店第1停車場、皆美館車位。</small></div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=彩雲堂+本店" target="_blank" class="map-btn">📍 導航彩雲堂</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=京店第１駐車場" target="_blank" class="map-btn park-btn">🅿️ 京店停車場</a>
+                    <div class="timeline-item drive"><div class="time-badge">10:20 - 11:00 ｜ 🚗 開往松江市區找車位</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">11:00 - 11:50</div>
+                        <div class="loc-name">彩雲堂與甜點採買</div>
+                        <div class="loc-desc">步行採買「若草」，買完放回車上。<br><small>💡 停車：彩雲堂、京店第1、皆美館擇一</small></div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=彩雲堂+本店" target="_blank" class="map-btn">📍 導航：彩雲堂</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=京店第１駐車場" target="_blank" class="map-btn park-btn">🅿️ 京店停車場</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item walk"><div class="time-badge">11:50 - 12:00 ｜ 🚶 步行前往皆美館 (或開車)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">12:00 - 13:15</div>
-                    <div class="loc-name">午餐：皆美館 庭園茶寮</div>
-                    <div class="loc-desc"><span class="highlight">準時入座 12:00 預約</span>，享用家傳鯛魚飯。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=皆美館+松江" target="_blank" class="map-btn">📍 皆美館</a></div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">13:15 - 13:25 ｜ 🚗 餐後短程移動至松江城</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">13:25 - 14:20</div>
-                    <div class="loc-name">松江城天守閣 ＆ 物產館</div>
-                    <div class="loc-desc">約 1 小時的時間登城消化，隨後於 14:20 準備出發。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=松江城" target="_blank" class="map-btn">📍 導航松江城</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=松江城大手前駐車場" target="_blank" class="map-btn park-btn">🅿️ 大手前停車場</a>
+                    <div class="timeline-item walk"><div class="time-badge">11:50 - 12:00 ｜ 🚶 步行前往皆美館</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">12:00 - 13:15</div>
+                        <div class="loc-name">午餐：皆美館 庭園茶寮</div>
+                        <div class="loc-desc"><span class="highlight">準時入座 12:00 預約</span>，享用鯛魚飯。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=皆美館+松江" target="_blank" class="map-btn">📍 導航：皆美館</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">14:20 - 15:20 ｜ 🚗 沿著宍道湖畔，駛向出雲市</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:20 - 15:45</div>
-                    <div class="loc-name">飯店 Check-in (Dormy Inn)</div>
-                    <div class="loc-desc">停好車放行李，<span class="highlight">切換成無壓力的「步行模式」</span>。<br><small>💡 飯店福利：21:30-23:00 免費宵夜拉麵與大浴場。</small></div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=天然温泉+八雲の湯+ドーミーイン出雲" target="_blank" class="map-btn">📍 Dormy Inn 出雲</a></div>
-                </div>
-                <div class="timeline-item walk"><div class="time-badge">15:45 - 15:55 ｜ 🚶 散步前往酒造 (約8-10分)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:55 - 17:00</div>
-                    <div class="loc-name">🍶 旭日酒造 (十旭日)</div>
-                    <div class="loc-desc">關店前精華一小時！參觀百年土藏，無開車壓力盡情試飲清酒。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=旭日酒造" target="_blank" class="map-btn">📍 旭日酒造</a></div>
-                </div>
-                <div class="timeline-item walk"><div class="time-badge">17:00 - 18:00 ｜ 🚶 晚餐前自由活動 (泡湯/採買)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:00 - 20:00</div>
-                    <div class="loc-name">晚餐：站前居酒屋</div>
-                    <div class="loc-desc">推薦當地人氣居酒屋 (如 ツバメヤ)。大啖海鮮，盡情小酌。</div>
-                    <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=ツバメヤ+出雲" target="_blank" class="map-btn">📍 ツバメヤ</a></div>
+                    <div class="timeline-item drive"><div class="time-badge">13:15 - 13:25 ｜ 🚗 短程移動至松江城</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">13:25 - 14:20</div>
+                        <div class="loc-name">松江城天守閣 ＆ 物產館</div>
+                        <div class="loc-desc">約 1 小時登城，隨後於 14:20 準備出發。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=松江城" target="_blank" class="map-btn">📍 導航：松江城</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=松江城大手前駐車場" target="_blank" class="map-btn park-btn">🅿️ 大手前停車場</a>
+                        </div>
+                    </div>
+                    <div class="timeline-item drive"><div class="time-badge">14:20 - 15:20 ｜ 🚗 沿宍道湖駛向出雲</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:20 - 15:45</div>
+                        <div class="loc-name">飯店 Check-in 停車 (Dormy Inn)</div>
+                        <div class="loc-desc"><span class="highlight">切換為步行模式</span>。<br><small>21:30-23:00 免費宵夜拉麵</small></div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=天然温泉+八雲の湯+ドーミーイン出雲" target="_blank" class="map-btn">📍 導航：Dormy Inn</a></div>
+                    </div>
+                    <div class="timeline-item walk"><div class="time-badge">15:45 - 15:55 ｜ 🚶 散步前往酒造</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:55 - 17:00</div>
+                        <div class="loc-name">🍶 旭日酒造 (十旭日)</div>
+                        <div class="loc-desc">關店前精華一小時！兩人皆可盡情試飲。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=旭日酒造" target="_blank" class="map-btn">📍 導航：旭日酒造</a></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:00 - 20:00</div>
+                        <div class="loc-name">晚餐：站前居酒屋</div>
+                        <div class="loc-desc">推薦當地人氣居酒屋 (如 ツバメヤ)。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=ツバメヤ+出雲" target="_blank" class="map-btn">📍 導航：ツバメヤ</a></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Day 4 -->
-    <div id="day4" class="tab-content">
+    <div id="day4" class="day-section">
         <div class="day-card">
-            <h2 class="day-title">⛩️ 神話巡禮與溫泉海景 <span>09/17 (四)</span></h2>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Izumo-taisha_Kaguraden_02.jpg/800px-Izumo-taisha_Kaguraden_02.jpg" alt="出雲大社" class="day-banner" loading="lazy">
-            <div class="timeline">
-                <div class="timeline-item drive"><div class="time-badge">10:00 - 10:20 ｜ 🚗 開車前往稻佐之濱</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">10:20 - 10:50</div>
-                    <div class="loc-name">稻佐之濱 (弁天島)</div>
-                    <div class="loc-desc">參拜神話海岸，並在此 <span class="highlight">取海砂</span>。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=稲佐の浜" target="_blank" class="map-btn">📍 稻佐之濱</a>
+            <div class="day-hero" style="background-image: url('https://images.unsplash.com/photo-1492136344046-866c85e0bf04?auto=format&fit=crop&w=800&q=80');">
+                <h2 class="day-hero-title">⛩️ 神話巡禮與溫泉海景</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="timeline-item drive"><div class="time-badge">10:00 - 10:20 ｜ 🚗 前往稻佐之濱</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">10:20 - 10:50</div>
+                        <div class="loc-name">稻佐之濱 (弁天島)</div>
+                        <div class="loc-desc">參拜神話海岸，並在此 <span class="highlight">取海砂</span>。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=稲佐の浜" target="_blank" class="map-btn">📍 導航：稻佐之濱</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">10:50 - 11:00 ｜ 🚗 帶著御砂前往出雲大社</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">11:00 - 12:45</div>
-                    <div class="loc-name">出雲大社</div>
-                    <div class="loc-desc">沿路參拜至最後方「素鵞社」<span class="highlight">進行御砂交換</span>，獲得神明庇佑。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=出雲大社" target="_blank" class="map-btn">📍 出雲大社</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=出雲大社大駐車場" target="_blank" class="map-btn park-btn">🅿️ 大駐車場</a>
+                    <div class="timeline-item drive"><div class="time-badge">10:50 - 11:00 ｜ 🚗 帶御砂前往出雲大社</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">11:00 - 12:45</div>
+                        <div class="loc-name">出雲大社</div>
+                        <div class="loc-desc">參拜至最後方「素鵞社」<span class="highlight">進行御砂交換</span>。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=出雲大社" target="_blank" class="map-btn">📍 導航：出雲大社</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=出雲大社大駐車場" target="_blank" class="map-btn park-btn">🅿️ 大駐車場</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-badge">12:45 - 14:30</div>
-                    <div class="loc-name">午餐：出雲蕎麥麵 ＆ 神門通逛街</div>
-                    <div class="loc-desc">於神門通周邊享用當地名產「割子蕎麥麵」並逛街。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=神門通り+出雲" target="_blank" class="map-btn alt-btn">📍 導航神門通</a>
+                    <div class="timeline-item">
+                        <div class="time-badge">12:45 - 14:30</div>
+                        <div class="loc-name">午餐：蕎麥麵 ＆ 神門通逛街</div>
+                        <div class="loc-desc">享用當地名產「割子蕎麥麵」。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=神門通り+出雲" target="_blank" class="map-btn alt-btn">📍 導航：神門通</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">14:30 - 15:10 ｜ 🚗 開車前往松江 (秋鹿公園)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:10 - 15:25</div>
-                    <div class="loc-name">秋鹿公園 (休息站)</div>
-                    <div class="loc-desc">中途休息，欣賞廣闊的宍道湖風景。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=道の駅+秋鹿なぎさ公園" target="_blank" class="map-btn">📍 秋鹿公園</a>
+                    <div class="timeline-item drive"><div class="time-badge">14:30 - 15:10 ｜ 🚗 前往松江秋鹿公園</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:10 - 15:25</div>
+                        <div class="loc-name">秋鹿公園 (休息站)</div>
+                        <div class="loc-desc">欣賞廣闊的宍道湖風景。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=道の駅+秋鹿なぎさ公園" target="_blank" class="map-btn">📍 導航：秋鹿公園</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">15:25 - 16:30 ｜ 🚗 開車前往米子皆生溫泉</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">16:30 - 17:00</div>
-                    <div class="loc-name">飯店 Check-in (皆生溫泉)</div>
-                    <div class="loc-desc">辦理入住與放行李，準備傍晚的海灘散步。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=皆生温泉" target="_blank" class="map-btn">📍 皆生溫泉</a>
+                    <div class="timeline-item drive"><div class="time-badge">15:25 - 16:30 ｜ 🚗 前往皆生溫泉</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">16:30 - 17:00</div>
+                        <div class="loc-name">飯店 Check-in (皆生溫泉)</div>
+                        <div class="loc-desc">辦理入住，準備傍晚海灘散步。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=皆生温泉" target="_blank" class="map-btn">📍 導航：皆生溫泉</a></div>
                     </div>
-                </div>
-                <div class="timeline-item walk"><div class="time-badge">17:00 - 18:15 ｜ 🚶 步行至海邊或泡湯</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">17:00 - 18:15</div>
-                    <div class="loc-name">皆生溫泉海邊夕陽</div>
-                    <div class="loc-desc">悠閒在沙灘拍照捕捉 <span class="highlight">18:12 日落絕景</span>，或先享受溫泉。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=皆生温泉海遊ビーチ" target="_blank" class="map-btn alt-btn">📍 皆生海灘</a>
+                    <div class="timeline-item walk"><div class="time-badge">17:00 - 18:15 ｜ 🚶 海邊散步或泡湯</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">17:00 - 18:15</div>
+                        <div class="loc-name">皆生溫泉海邊夕陽</div>
+                        <div class="loc-desc">捕捉 18:12 日落絕景，或先享受溫泉。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=皆生温泉海遊ビーチ" target="_blank" class="map-btn alt-btn">📍 導航：皆生海灘</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">18:15 - 18:30 ｜ 🚗 開車前往米子市區 (約15分)</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">18:30 - 20:00</div>
-                    <div class="loc-name">米子市區晚餐</div>
-                    <div class="loc-desc">至米子市中心，悠閒享用高質感的熟食與在地料理。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=米子駅" target="_blank" class="map-btn">📍 米子車站周邊</a>
+                    <div class="timeline-item drive"><div class="time-badge">18:15 - 18:30 ｜ 🚗 前往米子市區</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">18:30 - 20:00</div>
+                        <div class="loc-name">米子市區晚餐</div>
+                        <div class="loc-desc">享用高質感的熟食與在地料理。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=米子駅" target="_blank" class="map-btn">📍 導航：米子車站</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">20:00 - 20:10 ｜ 🚗 開車前往 MEGA Donki</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">20:10 - 21:40</div>
-                    <div class="loc-name">MEGA Donki 米子店</div>
-                    <div class="loc-desc">深夜主場！無打烊壓力地將免稅藥妝、零食一次買齊。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=MEGAドン・キホーテ米子店" target="_blank" class="map-btn">📍 唐吉訶德 米子店</a>
+                    <div class="timeline-item drive"><div class="time-badge">20:00 - 20:10 ｜ 🚗 前往 MEGA Donki</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">20:10 - 21:40</div>
+                        <div class="loc-name">MEGA Donki 米子店</div>
+                        <div class="loc-desc">深夜主場！無打烊壓力買齊免稅藥妝。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=MEGAドン・キホーテ米子店" target="_blank" class="map-btn">📍 導航：唐吉訶德</a></div>
                     </div>
                 </div>
             </div>
@@ -614,82 +552,77 @@
     </div>
 
     <!-- Day 5 -->
-    <div id="day5" class="tab-content">
+    <div id="day5" class="day-section">
         <div class="day-card">
-            <h2 class="day-title">🐄 牧場風景與妖怪小鎮 <span>09/18 (五)</span></h2>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Mount_Daisen_from_Kofu_01.jpg/800px-Mount_Daisen_from_Kofu_01.jpg" alt="大山" class="day-banner" loading="lazy">
-            <div class="timeline">
-                <div class="timeline-item drive"><div class="time-badge">10:00 - 10:25 ｜ 🚗 從皆生溫泉開車前往大山</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">10:25 - 11:25</div>
-                    <div class="loc-name">大山牧場牛奶之鄉 (視情況調整)</div>
-                    <div class="loc-desc">停留 1 小時，品嚐濃郁牛奶霜淇淋，並欣賞大山風景。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=大山まきばみるくの里" target="_blank" class="map-btn">📍 大山牛奶之鄉</a>
+            <div class="day-hero" style="background-image: url('https://images.unsplash.com/photo-1549487968-07eebc132840?auto=format&fit=crop&w=800&q=80');">
+                <h2 class="day-hero-title">🗻 大山牧場與妖怪小鎮</h2>
+            </div>
+            <div class="day-content">
+                <div class="timeline">
+                    <div class="timeline-item drive"><div class="time-badge">10:00 - 10:25 ｜ 🚗 前往大山</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">10:25 - 11:25</div>
+                        <div class="loc-name">大山牧場牛奶之鄉 (彈性)</div>
+                        <div class="loc-desc">品嚐濃郁牛奶霜淇淋，欣賞大山風景。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=大山まきばみるくの里" target="_blank" class="map-btn">📍 導航：大山牛奶之鄉</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">11:25 - 12:10 ｜ 🚗 開車從大山前往境港市區</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">12:10 - 13:10</div>
-                    <div class="loc-name">午餐：境港海鮮</div>
-                    <div class="loc-desc">推薦：吃螃蟹丼或海鮮市場。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=境港水産物直売センター" target="_blank" class="map-btn">📍 水產物直賣中心</a>
-                        <a href="https://www.google.com/maps/search/?api=1&query=境港+海鮮" target="_blank" class="map-btn alt-btn">📍 周邊海鮮搜尋</a>
+                    <div class="timeline-item drive"><div class="time-badge">11:25 - 12:10 ｜ 🚗 前往境港市區</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">12:10 - 13:10</div>
+                        <div class="loc-name">午餐：境港海鮮</div>
+                        <div class="loc-desc">推薦：螃蟹丼或海鮮市場。</div>
+                        <div class="btn-group">
+                            <a href="https://www.google.com/maps/search/?api=1&query=境港水産物直売センター" target="_blank" class="map-btn">📍 水產物直賣中心</a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=境港+海鮮" target="_blank" class="map-btn alt-btn">周邊海鮮</a>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item walk"><div class="time-badge">13:10 - 14:40 ｜ 🚶 步行逛街</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">13:10 - 14:40</div>
-                    <div class="loc-name">水木茂大道 (妖怪大街)</div>
-                    <div class="loc-desc">漫步妖怪大街，與各式妖怪銅像合影，購買專屬紀念品。</div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=水木しげるロード" target="_blank" class="map-btn">📍 水木茂大道</a>
+                    <div class="timeline-item walk"><div class="time-badge">13:10 - 14:40 ｜ 🚶 步行逛街</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">13:10 - 14:40</div>
+                        <div class="loc-name">水木茂大道 (妖怪大街)</div>
+                        <div class="loc-desc">與妖怪銅像合影，購買專屬紀念品。</div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=水木しげるロード" target="_blank" class="map-btn">📍 導航：水木茂大道</a></div>
                     </div>
-                </div>
-                <div class="timeline-item drive"><div class="time-badge">14:40 - 15:00 ｜ 🚗 開車前往米子機場周邊租車店</div></div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:00 - 15:30</div>
-                    <div class="loc-name">還車與前往航廈</div>
-                    <div class="loc-desc">辦理還車手續，搭乘接駁車前往機場。</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="time-badge">15:30 - </div>
-                    <div class="loc-name">米子機場 報到與登機 ✈️</div>
-                    <div class="loc-desc">辦理報到、托運行李，把握最後時間在機場免稅店補齊伴手禮。<br><span class="highlight">搭乘 IT725 航班返台，平安歸來！</span></div>
-                    <div class="btn-group">
-                        <a href="https://www.google.com/maps/search/?api=1&query=米子鬼太郎空港" target="_blank" class="map-btn">📍 導航米子機場</a>
+                    <div class="timeline-item drive"><div class="time-badge">14:40 - 15:00 ｜ 🚗 前往機場租車店</div></div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:00 - 15:30</div>
+                        <div class="loc-name">還車與前往航廈</div>
+                        <div class="loc-desc">辦理還車手續，搭乘接駁車前往機場。</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">15:30 - </div>
+                        <div class="loc-name">米子機場 報到與登機 ✈️</div>
+                        <div class="loc-desc"><span class="highlight">搭乘 IT725 航班返台，平安歸來！</span></div>
+                        <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=米子鬼太郎空港" target="_blank" class="map-btn">📍 導航：米子機場</a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-</main>
+</div>
 
 <script>
-    function openTab(evt, dayId) {
-        // 隱藏所有分頁內容
-        var tabContents = document.getElementsByClassName("tab-content");
-        for (var i = 0; i < tabContents.length; i++) {
-            tabContents[i].classList.remove("active");
-        }
+    function switchTab(dayId) {
+        // 隱藏所有行程
+        document.querySelectorAll('.day-section').forEach(section => {
+            section.classList.remove('active');
+        });
         
         // 移除所有按鈕的 active 狀態
-        var tabBtns = document.getElementsByClassName("tab-btn");
-        for (var i = 0; i < tabBtns.length; i++) {
-            tabBtns[i].classList.remove("active");
-        }
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
         
-        // 顯示被點擊的分頁並加上 active 狀態
-        document.getElementById(dayId).classList.add("active");
-        evt.currentTarget.classList.add("active");
+        // 顯示選中的行程
+        document.getElementById(dayId).classList.add('active');
         
-        // 切換分頁時，自動將畫面平滑捲動回最上方 (剛好在標籤列下方)
-        // 扣除 Sticky Navbar 的高度 (約 50-60px)，以防內容被遮住
-        const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+        // 將點擊的按鈕設為 active
+        event.currentTarget.classList.add('active');
+        
+        // 平滑滾動到頁首 (扣除導覽列高度)
         window.scrollTo({
-            top: document.querySelector('.hero').offsetHeight, 
+            top: document.getElementById('tab-nav').offsetTop - 10,
             behavior: 'smooth'
         });
     }
