@@ -13,14 +13,22 @@
     --surface-soft: #f1eee7;
     --text: #252525;
     --text-soft: #687078;
+    
+    /* 莫蘭迪灰藍色 */
     --navy: #3d5a6d;
     --navy-dark: #2e424d;
+    
     --sand: #d8c3a5;
     --sand-dark: #a8754a;
     --line: #ddd8cf;
     --white: #ffffff;
     --shadow: 0 12px 35px rgba(45, 50, 52, 0.08);
     --radius: 20px;
+
+    /* 古銅金屬色系 */
+    --metal-dark: #66513D;
+    --metal: #8C7255;
+    --metal-light: #C8B08A;
 }
 
 * { box-sizing: border-box; }
@@ -106,35 +114,48 @@ body {
     backdrop-filter: blur(8px);
 }
 
-/* ===== Sticky day navigation ===== */
+/* ===== Sticky day navigation (左右滑動) ===== */
 .tabs-wrap {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(247,245,240,.94);
-    border-bottom: 1px solid rgba(221,216,207,.85);
-    backdrop-filter: blur(14px);
+    background: transparent !important;
+    border-bottom: 0 !important;
+    padding: .45rem .6rem .5rem;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
 }
 
-.tabs {
-    max-width: 980px;
-    margin: auto;
+#tab-nav {
+    width: min(980px, 100%);
+    margin: 0 auto;
+    padding: .25rem .5rem 0 !important;
+    border: 1px solid rgba(140,114,85,.38) !important;
+    border-radius: 14px;
+    background: rgba(247,245,240,.70) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(115%);
+    backdrop-filter: blur(18px) saturate(115%);
+    box-shadow:
+        0 10px 28px rgba(53,45,36,.10),
+        inset 0 1px 0 rgba(255,255,255,.78);
+    
     display: flex;
     overflow-x: auto;
+    flex-wrap: nowrap;
     gap: .1rem;
-    padding: .35rem .75rem 0;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
 }
 
-.tabs::-webkit-scrollbar { display: none; }
+#tab-nav::-webkit-scrollbar { display: none; }
 
 .tab-btn {
     position: relative;
-    flex: 1 0 82px;
+    flex: 0 0 82px; 
     min-height: 68px;
     padding: .6rem .7rem .8rem;
     border: 0;
-    background: transparent;
+    background: transparent !important;
     color: var(--text-soft);
     cursor: pointer;
     font-family: inherit;
@@ -144,7 +165,7 @@ body {
 .tab-number {
     display: block;
     font-family: Georgia, serif;
-    font-size: .78rem;
+    font-size: .75rem;
     letter-spacing: 1px;
 }
 
@@ -163,17 +184,17 @@ body {
     bottom: 0;
     height: 3px;
     border-radius: 3px 3px 0 0;
-    background: transparent;
+    background: linear-gradient(90deg, rgba(102,81,61,.25), var(--metal), rgba(200,176,138,.8)) !important;
     transform: scaleX(.4);
-    transition: .25s ease;
+    transition: transform .25s ease;
 }
 
 .tab-btn.active {
-    color: var(--navy);
+    color: var(--metal-dark) !important;
 }
 
 .tab-btn.active::after {
-    background: var(--sand-dark);
+    background: var(--sand-dark) !important;
     transform: scale(1.7);
 }
 
@@ -207,8 +228,25 @@ body {
     margin: 1rem 0 1.25rem;
 }
 
+.day-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-top: .85rem;
+}
+
+.route-btn {
+    background: var(--sand-dark);
+    color: var(--white);
+    border-color: rgba(140,114,85,.28) !important;
+}
+
+.route-btn:hover {
+    background: #94633c;
+}
+
 .day-label {
-    color: var(--sand-dark);
+    color: var(--metal-dark);
     font-family: Georgia, serif;
     font-size: .82rem;
     letter-spacing: 2px;
@@ -256,13 +294,22 @@ body {
     font-size: .65rem;
 }
 
-/* ===== Hero card ===== */
+/* ===== Hero card (古銅金屬邊框) ===== */
 .day-card {
     overflow: hidden;
     background: var(--surface);
-    border: 1px solid var(--line);
     border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    border: 1px solid transparent !important;
+    border-image: linear-gradient(
+        135deg,
+        rgba(102,81,61,.72),
+        rgba(200,176,138,.72) 45%,
+        rgba(140,114,85,.68) 72%,
+        rgba(102,81,61,.72)
+    ) 1;
+    box-shadow:
+        0 14px 34px rgba(53,45,36,.07),
+        inset 0 1px 0 rgba(255,255,255,.62);
 }
 
 .day-hero {
@@ -276,11 +323,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(25,31,34,.72),
-        rgba(25,31,34,.03) 65%
-    );
+    background: linear-gradient(to top, rgba(25,31,34,.72), rgba(25,31,34,.03) 65%);
 }
 
 .day-hero-content {
@@ -323,7 +366,7 @@ body {
     top: .55rem;
     bottom: .55rem;
     width: 1px;
-    background: var(--line);
+    background: linear-gradient(to bottom, rgba(200,176,138,.85), rgba(140,114,85,.45)) !important;
 }
 
 .timeline-item {
@@ -331,9 +374,7 @@ body {
     margin-bottom: 1.75rem;
 }
 
-.timeline-item:last-child {
-    margin-bottom: 0;
-}
+.timeline-item:last-child { margin-bottom: 0; }
 
 .timeline-item:not(.drive):not(.walk)::before {
     content: "";
@@ -342,9 +383,10 @@ body {
     top: .45rem;
     width: 9px;
     height: 9px;
-    border: 3px solid var(--sand-dark);
     border-radius: 50%;
-    background: var(--surface);
+    background: var(--surface) !important;
+    border: 3px solid var(--metal) !important;
+    box-shadow: 0 0 0 3px rgba(200,176,138,.14);
 }
 
 .timeline-item.drive::before,
@@ -368,7 +410,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: .35rem;
-    color: var(--sand-dark);
+    color: var(--metal-dark) !important;
     font-family: Georgia, "Times New Roman", serif;
     font-size: .85rem;
     font-weight: 700;
@@ -384,7 +426,7 @@ body {
 }
 
 .loc-subtitle {
-    color: var(--sand-dark);
+    color: var(--metal-dark) !important;
     font-size: .75rem;
     font-weight: 800;
     letter-spacing: .5px;
@@ -403,7 +445,7 @@ body {
 }
 
 .drive-row .time {
-    color: #727b80;
+    color: #727b80 !important;
     font-size: .76rem;
     font-family: inherit;
 }
@@ -422,22 +464,23 @@ body {
     min-height: 38px;
     padding: .45rem .8rem;
     border-radius: 10px;
-    border: 1px solid var(--navy);
+    border: 1px solid rgba(140,114,85,.55) !important;
     background: var(--navy);
     color: white;
     text-decoration: none;
     font-size: .78rem;
     font-weight: 750;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
     transition: transform .15s ease, background .2s ease;
 }
 
 .map-btn:hover {
     background: var(--navy-dark);
+    border-color: var(--metal) !important;
+    box-shadow: 0 4px 12px rgba(102,81,61,.10), inset 0 1px 0 rgba(255,255,255,.62);
 }
 
-.map-btn:active {
-    transform: scale(.97);
-}
+.map-btn:active { transform: scale(.97); }
 
 .map-btn.alt-btn {
     background: transparent;
@@ -445,14 +488,17 @@ body {
     border-color: var(--line);
 }
 
-.map-btn.alt-btn:hover {
-    background: var(--surface-soft);
-}
+.map-btn.alt-btn:hover { background: var(--surface-soft); }
 
 .map-btn.park-btn {
-    background: var(--surface-soft);
-    color: var(--navy);
-    border-color: var(--line);
+    background: rgba(200, 176, 138, 0.15); 
+    color: var(--metal-dark); 
+    border-color: rgba(140, 114, 85, 0.25) !important;
+}
+
+.map-btn.park-btn:hover {
+    background: rgba(200, 176, 138, 0.25);
+    border-color: rgba(140, 114, 85, 0.4) !important;
 }
 
 /* ===== Important info ===== */
@@ -462,6 +508,10 @@ body {
     border-left: 3px solid var(--sand-dark);
     background: var(--surface-soft);
     border-radius: 0 12px 12px 0;
+    border-top: 1px solid rgba(200,176,138,.42);
+    border-right: 1px solid rgba(140,114,85,.22);
+    border-bottom: 1px solid rgba(140,114,85,.22);
+    box-shadow: 0 7px 20px rgba(53,45,36,.045), inset 0 1px 0 rgba(255,255,255,.55);
 }
 
 .notice-title {
@@ -478,7 +528,7 @@ body {
 }
 
 .highlight {
-    color: var(--sand-dark);
+    color: var(--metal-dark) !important;
     font-weight: 850;
 }
 
@@ -494,219 +544,41 @@ body {
 
 /* ===== Mobile ===== */
 @media (max-width: 600px) {
-    .hero {
-        min-height: 330px;
+    .hero { min-height: 330px; }
+    .hero-inner { padding: 2.5rem 1rem 2rem; }
+    .hero h1 { font-size: 2.55rem; }
+    .container { width: min(100% - 1rem, 920px); padding-top: .8rem; }
+    
+    .tabs-wrap { padding: .35rem .45rem .45rem; }
+    #tab-nav {
+        border-radius: 12px;
+        background: rgba(247,245,240,.74) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(112%);
+        backdrop-filter: blur(16px) saturate(112%);
     }
 
-    .hero-inner {
-        padding: 2.5rem 1rem 2rem;
-    }
-
-    .hero h1 {
-        font-size: 2.55rem;
-    }
-
-    .container {
-        width: min(100% - 1rem, 920px);
-        padding-top: .8rem;
-    }
-
-    .day-intro {
-        grid-template-columns: 1fr;
-        gap: .7rem;
-        margin-top: .7rem;
-    }
-
-    .day-stats {
-        justify-content: flex-start;
-    }
-
-    .stat {
-        min-width: 64px;
-    }
-
-    .day-hero {
-        height: 175px;
-    }
-
-    .day-content {
-        padding: 1.4rem 1rem 1.5rem;
-    }
-
-    .timeline {
-        margin-left: .45rem;
-        padding-left: 1.35rem;
-    }
-
-    .timeline-item:not(.drive):not(.walk)::before {
-        left: -1.61rem;
-    }
-
-    .timeline-item.drive::before,
-    .timeline-item.walk::before {
-        left: -1.53rem;
-    }
-
-    .loc-name {
-        font-size: 1.06rem;
-    }
-
-    .loc-desc {
-        font-size: .87rem;
-    }
-
-    .map-btn {
-        flex: 1 1 auto;
+    .day-intro { grid-template-columns: 1fr; gap: .7rem; margin-top: .7rem; }
+    .day-stats { justify-content: flex-start; }
+    .day-actions { margin-top: .65rem; }
+    .stat { min-width: 64px; }
+    .day-hero { height: 175px; }
+    .day-content { padding: 1.4rem 1rem 1.5rem; }
+    .timeline { margin-left: .45rem; padding-left: 1.35rem; }
+    .timeline-item:not(.drive):not(.walk)::before { left: -1.61rem; }
+    .timeline-item.drive::before, .timeline-item.walk::before { left: -1.53rem; }
+    .loc-name { font-size: 1.06rem; }
+    .loc-desc { font-size: .87rem; }
+    .map-btn { flex: 1 1 auto; }
+    
+    .day-card {
+        border-image: linear-gradient(135deg, rgba(102,81,61,.62), rgba(200,176,138,.64) 48%, rgba(140,114,85,.58)) 1;
     }
 }
 
 @media (min-width: 800px) {
-    .day-hero {
-        height: 230px;
-    }
-
-    .day-content {
-        padding: 2rem 2rem 2.1rem;
-    }
+    .day-hero { height: 230px; }
+    .day-content { padding: 2rem 2rem 2.1rem; }
 }
-
-/* ===== 古銅金屬 × 毛玻璃視覺升級｜修正版 ===== */
-:root{
-  --metal-dark:#66513D;
-  --metal:#8C7255;
-  --metal-light:#C8B08A;
-}
-
-/* 只把「原本的卡片細框」升級成古銅金屬；
-   不替 day-intro / hero-inner 加框，避免整頁出現多餘的大框。 */
-.day-card{
-  border:1px solid transparent !important;
-  border-image:linear-gradient(
-    135deg,
-    rgba(102,81,61,.72),
-    rgba(200,176,138,.72) 45%,
-    rgba(140,114,85,.68) 72%,
-    rgba(102,81,61,.72)
-  ) 1;
-  box-shadow:
-    0 14px 34px rgba(53,45,36,.07),
-    inset 0 1px 0 rgba(255,255,255,.62);
-}
-
-/* Notice 保留原本左側重點線，只增加非常淡的金屬層次 */
-.notice{
-  border-top:1px solid rgba(200,176,138,.42);
-  border-right:1px solid rgba(140,114,85,.22);
-  border-bottom:1px solid rgba(140,114,85,.22);
-  box-shadow:
-    0 7px 20px rgba(53,45,36,.045),
-    inset 0 1px 0 rgba(255,255,255,.55);
-}
-
-/* ===== 次要 Navbar：真正的毛玻璃 =====
-   外層保持透明，玻璃效果放在實際內容列上。 */
-.tabs-wrap{
-  background:transparent !important;
-  border-bottom:0 !important;
-  padding:.45rem .6rem .5rem;
-  -webkit-backdrop-filter:none !important;
-  backdrop-filter:none !important;
-}
-
-#tab-nav{
-  width:min(980px, 100%);
-  margin:0 auto;
-  padding:.25rem .5rem 0 !important;
-  border:1px solid rgba(140,114,85,.38) !important;
-  border-radius:14px;
-  background:rgba(247,245,240,.70) !important;
-  -webkit-backdrop-filter:blur(18px) saturate(115%);
-  backdrop-filter:blur(18px) saturate(115%);
-  box-shadow:
-    0 10px 28px rgba(53,45,36,.10),
-    inset 0 1px 0 rgba(255,255,255,.78);
-}
-
-/* Active 只用古銅細線，不做厚重色塊 */
-#tab-nav .tab-btn{
-  background:transparent !important;
-  color:var(--text-soft);
-  border-bottom:0;
-}
-
-#tab-nav .tab-btn::after{
-  background:linear-gradient(
-    90deg,
-    rgba(102,81,61,.25),
-    var(--metal),
-    rgba(200,176,138,.8)
-  ) !important;
-  height:2px;
-}
-
-#tab-nav .tab-btn.active{
-  color:var(--metal-dark) !important;
-  box-shadow:none !important;
-}
-
-/* 古銅色只用在資訊層級，不過度上色 */
-.time,
-.day-label,
-.loc-subtitle,
-.highlight{
-  color:var(--metal-dark) !important;
-}
-
-/* Timeline 細線與節點 */
-.timeline::before{
-  background:linear-gradient(
-    to bottom,
-    rgba(200,176,138,.85),
-    rgba(140,114,85,.45)
-  ) !important;
-}
-
-.timeline-item:not(.drive):not(.walk)::before{
-  background:var(--surface) !important;
-  border-color:var(--metal) !important;
-  box-shadow:0 0 0 3px rgba(200,176,138,.14);
-}
-
-/* 導航按鈕只做微小金屬細節，不改成金色按鈕 */
-.map-btn{
-  border-color:rgba(140,114,85,.55) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
-}
-
-.map-btn:hover{
-  border-color:var(--metal) !important;
-  box-shadow:
-    0 4px 12px rgba(102,81,61,.10),
-    inset 0 1px 0 rgba(255,255,255,.62);
-}
-
-@media (max-width:600px){
-  .tabs-wrap{
-    padding:.35rem .45rem .45rem;
-  }
-
-  #tab-nav{
-    border-radius:12px;
-    background:rgba(247,245,240,.74) !important;
-    -webkit-backdrop-filter:blur(16px) saturate(112%);
-    backdrop-filter:blur(16px) saturate(112%);
-  }
-
-  .day-card{
-    border-image:linear-gradient(
-      135deg,
-      rgba(102,81,61,.62),
-      rgba(200,176,138,.64) 48%,
-      rgba(140,114,85,.58)
-    ) 1;
-  }
-}
-
 </style>
 </head>
 
@@ -716,7 +588,7 @@ body {
     <div class="hero-inner">
         <div class="eyebrow">SAN-IN ROAD TRIP · 2026</div>
         <h1>鳥取・島根<br>五日自駕旅</h1>
-        <p class="hero-subtitle">2026.09.14 — 09.18　｜　米子進出</p>
+        <p class="hero-subtitle">2026.09.14 — 09.18 ｜ 米子進出</p>
         <div class="hero-meta">
             <span>🚗 自駕</span>
             <span>✈️ 米子往返</span>
@@ -727,6 +599,11 @@ body {
 
 <div class="tabs-wrap">
     <nav class="tabs" id="tab-nav">
+        <!-- 航班 TAB：上方留白使用 &nbsp; 保持高度 -->
+        <button class="tab-btn" onclick="switchTab('flight', this)">
+            <span class="tab-number">&nbsp;</span><span class="tab-name">航班</span>
+        </button>
+        <!-- 原本日程 -->
         <button class="tab-btn active" onclick="switchTab('day1', this)">
             <span class="tab-number">01</span><span class="tab-name">柯南</span>
         </button>
@@ -747,6 +624,58 @@ body {
 
 <main class="container">
 
+<!-- ==================== FLIGHT (航班與交通) ==================== -->
+<section id="flight" class="day-section">
+    <div class="day-intro">
+        <div>
+            <div class="day-label">FLIGHT INFO</div>
+            <h2 class="day-title">航班與行前準備</h2>
+            <p class="day-route">台灣(TPE) ↔ 米子(YGJ)</p>
+        </div>
+        <div class="day-stats">
+            <div class="stat"><strong>IT</strong><span>TIGERAIR</span></div>
+            <div class="stat"><strong>✈️</strong><span>FLIGHT</span></div>
+        </div>
+    </div>
+
+    <article class="day-card">
+        <div class="day-hero" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80');">
+            <div class="day-hero-content">
+                <div class="day-hero-kicker">FLIGHT SCHEDULE</div>
+                <h3 class="day-hero-title">台灣虎航 IT724 / IT725</h3>
+            </div>
+        </div>
+
+        <div class="day-content">
+            <div class="notice">
+                <div class="notice-title">💡 行前溫馨提醒</div>
+                <p>自駕必備：<span class="highlight">護照、台灣駕照正本、駕照日文譯本</span>。<br>建議航班起飛前 2.5 小時抵達機場報到。</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="time">09.14 MON</div>
+                    <div class="loc-name">去程航班 <span class="loc-subtitle">IT 724</span></div>
+                    <p class="loc-desc">
+                        🛫 <strong>08:35</strong> 台北 (TPE桃園) 第1航廈<br>
+                        🛬 <strong>12:00</strong> 鳥取 (YGJ米子鬼太郎機場)
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="time">09.18 FRI</div>
+                    <div class="loc-name">回程航班 <span class="loc-subtitle">IT 725</span></div>
+                    <p class="loc-desc">
+                        🛫 <strong>17:50</strong> 鳥取 (YGJ米子鬼太郎機場)<br>
+                        🛬 <strong>19:45</strong> 台北 (TPE桃園) 第1航廈
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+
 <!-- ==================== DAY 1 ==================== -->
 <section id="day1" class="day-section active">
 
@@ -755,6 +684,9 @@ body {
             <div class="day-label">DAY 01 · 09.14 MON</div>
             <h2 class="day-title">抵達與柯南小鎮</h2>
             <p class="day-route">米子 ✈ → 北榮 → 鳥取</p>
+            <div class="day-actions">
+                <a class="map-btn route-btn" href="#" data-origin="米子鬼太郎空港" data-waypoints="ラーメン悟空 淀江|青山剛昌ふるさと館" data-destination="鳥取グリーンホテルモーリス">🧭 今日路線</a>
+            </div>
         </div>
         <div class="day-stats">
             <div class="stat"><strong>5</strong><span>STOPS</span></div>
@@ -788,7 +720,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">13:30 — 14:00</span>　🚗 前往米子市區</div>
+                    <div class="drive-row"><span class="time">13:30 — 14:00</span> 🚗 前往米子市區</div>
                 </div>
 
                 <div class="timeline-item">
@@ -802,7 +734,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">14:45 — 15:20</span>　🚗 前往北榮町</div>
+                    <div class="drive-row"><span class="time">14:45 — 15:20</span> 🚗 前往北榮町</div>
                 </div>
 
                 <div class="timeline-item">
@@ -816,7 +748,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">17:15 — 18:15</span>　🚗 前往鳥取市區</div>
+                    <div class="drive-row"><span class="time">17:15 — 18:15</span> 🚗 前往鳥取市區</div>
                 </div>
 
                 <div class="timeline-item">
@@ -862,6 +794,9 @@ body {
             <div class="day-label">DAY 02 · 09.15 TUE</div>
             <h2 class="day-title">海岸奇景與夕陽</h2>
             <p class="day-route">鳥取 → 砂丘 → 白兔 → 倉吉 → 松江 → 玉造</p>
+            <div class="day-actions">
+                <a class="map-btn route-btn" href="#" data-origin="鳥取砂丘" data-waypoints="かろいち|白兎神社|鳥取二十世紀梨記念館 なしっこ館|お菓子の壽城|島根県立美術館" data-destination="玉造温泉 松乃湯">🧭 今日路線</a>
+            </div>
         </div>
         <div class="day-stats">
             <div class="stat"><strong>7</strong><span>STOPS</span></div>
@@ -886,7 +821,7 @@ body {
             <div class="timeline">
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">09:00 — 09:15</span>　🚗 出發前往鳥取砂丘</div>
+                    <div class="drive-row"><span class="time">09:00 — 09:15</span> 🚗 出發前往鳥取砂丘</div>
                 </div>
 
                 <div class="timeline-item">
@@ -900,7 +835,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">11:50 — 12:05</span>　🚗 前往賀露港</div>
+                    <div class="drive-row"><span class="time">11:50 — 12:05</span> 🚗 前往賀露港</div>
                 </div>
 
                 <div class="timeline-item">
@@ -914,7 +849,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">13:05 — 13:35</span>　🚗 前往白兔海岸</div>
+                    <div class="drive-row"><span class="time">13:05 — 13:35</span> 🚗 前往白兔海岸</div>
                 </div>
 
                 <div class="timeline-item">
@@ -927,7 +862,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">14:05 — 14:50</span>　🚗 前往倉吉市</div>
+                    <div class="drive-row"><span class="time">14:05 — 14:50</span> 🚗 前往倉吉市</div>
                 </div>
 
                 <div class="timeline-item">
@@ -940,7 +875,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">15:40 — 16:30</span>　🚗 走山陰道往米子</div>
+                    <div class="drive-row"><span class="time">15:40 — 16:30</span> 🚗 走山陰道往米子</div>
                 </div>
 
                 <div class="timeline-item">
@@ -954,7 +889,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">17:00 — 17:30</span>　🚗 前往松江市</div>
+                    <div class="drive-row"><span class="time">17:00 — 17:30</span> 🚗 前往松江市</div>
                 </div>
 
                 <div class="timeline-item">
@@ -973,7 +908,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">18:20 — 18:40</span>　🚗 前往玉造溫泉</div>
+                    <div class="drive-row"><span class="time">18:20 — 18:40</span> 🚗 前往玉造溫泉</div>
                 </div>
 
                 <div class="timeline-item">
@@ -999,6 +934,9 @@ body {
             <div class="day-label">DAY 03 · 09.16 WED</div>
             <h2 class="day-title">國寶城池與微醺</h2>
             <p class="day-route">玉造 → 松江 → 出雲</p>
+            <div class="day-actions">
+                <a class="map-btn route-btn" href="#" data-origin="玉作湯神社" data-waypoints="彩雲堂 本店|皆美館 松江|松江城|天然温泉 八雲の湯 ドーミーイン出雲|旭日酒造" data-destination="ツバメヤ 出雲">🧭 今日路線</a>
+            </div>
         </div>
         <div class="day-stats">
             <div class="stat"><strong>5</strong><span>STOPS</span></div>
@@ -1023,7 +961,7 @@ body {
             <div class="timeline">
 
                 <div class="timeline-item walk">
-                    <div class="drive-row"><span class="time">09:00 — 10:20</span>　🚶 晨間散策</div>
+                    <div class="drive-row"><span class="time">09:00 — 10:20</span> 🚶 晨間散策</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1037,7 +975,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">10:20 — 11:00</span>　🚗 開往松江市區找車位</div>
+                    <div class="drive-row"><span class="time">10:20 — 11:00</span> 🚗 開往松江市區找車位</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1051,7 +989,7 @@ body {
                 </div>
 
                 <div class="timeline-item walk">
-                    <div class="drive-row"><span class="time">11:50 — 12:00</span>　🚶 步行前往皆美館</div>
+                    <div class="drive-row"><span class="time">11:50 — 12:00</span> 🚶 步行前往皆美館</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1064,7 +1002,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">13:15 — 13:25</span>　🚗 短程移動至松江城</div>
+                    <div class="drive-row"><span class="time">13:15 — 13:25</span> 🚗 短程移動至松江城</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1078,7 +1016,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">14:20 — 15:20</span>　🚗 沿宍道湖駛向出雲</div>
+                    <div class="drive-row"><span class="time">14:20 — 15:20</span> 🚗 沿宍道湖駛向出雲</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1092,7 +1030,7 @@ body {
                 </div>
 
                 <div class="timeline-item walk">
-                    <div class="drive-row"><span class="time">15:45 — 15:55</span>　🚶 散步前往酒造</div>
+                    <div class="drive-row"><span class="time">15:45 — 15:55</span> 🚶 散步前往酒造</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1127,6 +1065,9 @@ body {
             <div class="day-label">DAY 04 · 09.17 THU</div>
             <h2 class="day-title">神話巡禮與溫泉海景</h2>
             <p class="day-route">出雲 → 稻佐之濱 → 出雲大社 → 松江 → 皆生</p>
+            <div class="day-actions">
+                <a class="map-btn route-btn" href="#" data-origin="稲佐の浜" data-waypoints="出雲大社|神門通り 出雲|道の駅 秋鹿なぎさ公園|皆生温泉" data-destination="米子駅">🧭 今日路線</a>
+            </div>
         </div>
         <div class="day-stats">
             <div class="stat"><strong>6</strong><span>STOPS</span></div>
@@ -1151,7 +1092,7 @@ body {
             <div class="timeline">
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">10:00 — 10:20</span>　🚗 前往稻佐之濱</div>
+                    <div class="drive-row"><span class="time">10:00 — 10:20</span> 🚗 前往稻佐之濱</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1164,7 +1105,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">10:50 — 11:00</span>　🚗 帶御砂前往出雲大社</div>
+                    <div class="drive-row"><span class="time">10:50 — 11:00</span> 🚗 帶御砂前往出雲大社</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1187,7 +1128,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">14:30 — 15:10</span>　🚗 前往松江秋鹿公園</div>
+                    <div class="drive-row"><span class="time">14:30 — 15:10</span> 🚗 前往松江秋鹿公園</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1200,7 +1141,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">15:25 — 16:30</span>　🚗 前往皆生溫泉</div>
+                    <div class="drive-row"><span class="time">15:25 — 16:30</span> 🚗 前往皆生溫泉</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1214,7 +1155,7 @@ body {
                 </div>
 
                 <div class="timeline-item walk">
-                    <div class="drive-row"><span class="time">17:00 — 18:15</span>　🚶 海邊散步或泡湯</div>
+                    <div class="drive-row"><span class="time">17:00 — 18:15</span> 🚶 海邊散步或泡湯</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1227,7 +1168,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">18:15 — 18:30</span>　🚗 前往米子市區</div>
+                    <div class="drive-row"><span class="time">18:15 — 18:30</span> 🚗 前往米子市區</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1240,7 +1181,7 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">20:00 — 20:10</span>　🚗 前往 MEGA Donki</div>
+                    <div class="drive-row"><span class="time">20:00 — 20:10</span> 🚗 前往 MEGA Donki</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1265,6 +1206,9 @@ body {
             <div class="day-label">DAY 05 · 09.18 FRI</div>
             <h2 class="day-title">大山牧場與妖怪小鎮</h2>
             <p class="day-route">大山 → 境港 → 米子機場 ✈</p>
+            <div class="day-actions">
+                <a class="map-btn route-btn" href="#" data-origin="大山まきばみるくの里" data-waypoints="境港水産物直売センター|水木しげるロード" data-destination="米子鬼太郎空港">🧭 今日路線</a>
+            </div>
         </div>
         <div class="day-stats">
             <div class="stat"><strong>3</strong><span>STOPS</span></div>
@@ -1283,13 +1227,13 @@ body {
         <div class="day-content">
             <div class="notice">
                 <div class="notice-title">✈️ 今日重點</div>
-                <p>上午彈性安排大山，下午逛水木茂大道，最後還車前往米子機場。</p>
+                <p>上午彈性安排大山，下午逛水木茂大道，享受充裕時間後前往米子機場。</p>
             </div>
 
             <div class="timeline">
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">10:00 — 10:25</span>　🚗 前往大山</div>
+                    <div class="drive-row"><span class="time">10:00 — 10:25</span> 🚗 前往大山</div>
                 </div>
 
                 <div class="timeline-item">
@@ -1303,11 +1247,11 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">11:25 — 12:10</span>　🚗 前往境港市區</div>
+                    <div class="drive-row"><span class="time">11:25 — 12:10</span> 🚗 前往境港市區</div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="time">12:10 — 13:10</div>
+                    <div class="time">12:10 — 13:30</div>
                     <div class="loc-name">午餐：境港海鮮</div>
                     <p class="loc-desc">推薦：螃蟹丼或海鮮市場。</p>
                     <div class="btn-group">
@@ -1317,11 +1261,11 @@ body {
                 </div>
 
                 <div class="timeline-item walk">
-                    <div class="drive-row"><span class="time">13:10 — 14:40</span>　🚶 步行逛街</div>
+                    <div class="drive-row"><span class="time">13:30 — 15:30</span> 🚶 步行逛街 (時間加碼!)</div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="time">13:10 — 14:40</div>
+                    <div class="time">13:30 — 15:30</div>
                     <div class="loc-name">水木茂大道</div>
                     <div class="loc-subtitle">妖怪大街</div>
                     <p class="loc-desc">與妖怪銅像合影，購買專屬紀念品。</p>
@@ -1331,19 +1275,19 @@ body {
                 </div>
 
                 <div class="timeline-item drive">
-                    <div class="drive-row"><span class="time">14:40 — 15:00</span>　🚗 前往機場租車店</div>
+                    <div class="drive-row"><span class="time">15:30 — 15:50</span> 🚗 前往機場租車店</div>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="time">15:00 — 15:30</div>
+                    <div class="time">15:50 — 16:20</div>
                     <div class="loc-name">還車與前往航廈</div>
                     <p class="loc-desc">辦理還車手續，搭乘接駁車前往機場。</p>
                 </div>
 
                 <div class="timeline-item">
-                    <div class="time">15:30 —</div>
+                    <div class="time">16:20 — 17:50</div>
                     <div class="loc-name">米子機場 <span class="loc-subtitle">報到・登機 ✈️</span></div>
-                    <p class="loc-desc"><span class="highlight">搭乘 IT725 航班返台，平安歸來！</span></p>
+                    <p class="loc-desc"><span class="highlight">17:50 起飛，搭乘 IT725 航班返台！</span></p>
                     <div class="btn-group">
                         <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=米子鬼太郎空港" target="_blank">📍 導航</a>
                     </div>
@@ -1357,10 +1301,34 @@ body {
 </main>
 
 <footer class="footer">
-    鳥取・島根 五日自駕旅　｜　2026.09.14 — 09.18
+    鳥取・島根 五日自駕旅 ｜ 2026.09.14 — 09.18
 </footer>
 
 <script>
+function buildMapsRouteUrl(origin, destination, waypoints = []) {
+    const params = new URLSearchParams({
+        api: '1',
+        origin,
+        destination,
+        travelmode: 'driving'
+    });
+
+    if (waypoints.length > 0) {
+        params.set('waypoints', waypoints.join('|'));
+    }
+
+    return `https://www.google.com/maps/dir/?${params.toString()}`;
+}
+
+document.querySelectorAll('.route-btn').forEach(button => {
+    const origin = button.dataset.origin;
+    const destination = button.dataset.destination;
+    const waypoints = button.dataset.waypoints ? button.dataset.waypoints.split('|') : [];
+
+    button.href = buildMapsRouteUrl(origin, destination, waypoints);
+    button.target = '_blank';
+});
+
 function switchTab(dayId, button) {
     document.querySelectorAll('.day-section').forEach(section => {
         section.classList.remove('active');
@@ -1374,6 +1342,7 @@ function switchTab(dayId, button) {
     target.classList.add('active');
     button.classList.add('active');
 
+    // 點擊後平滑滾動回導航列位置，讓閱讀體驗更好
     document.getElementById('tab-nav').scrollIntoView({
         behavior: 'smooth',
         block: 'start'
